@@ -15,7 +15,8 @@
 			:IS_INVERTED="IS_INVERTED"
 			@invert="toggleInvert"
 			@clear="clearBoard"
-			@reset="resetBoard"
+			@reset="resetBoard"		
+			@setSelectedData="(data) => {SELECTED_DATA = data}"
 		/>
 	</div>
 </template>
@@ -60,6 +61,7 @@ const updateBoard = (value?: number) => {
 const resetBoard = () => {
 	ROWS.value = INITIAL_ROWS;
 	clearBoard();
+	updateBoard();
 };
 
 const clearBoard = () => (SELECTED_DATA.value = []);

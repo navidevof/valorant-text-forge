@@ -7,14 +7,20 @@
 			>
 				<IconCopy class="size-5" />
 				Copiar
-			</button>
-			<!-- TODO: add logic load data by code -->
+			</button>			
 			<button
 				@click="copyToClipboardCode"
-				class="bg-custom-red-1 justify-center items-center gap-x-2 hidden"
+				class="bg-custom-red-1 justify-center items-center gap-x-2 flex"
 			>
 				<IconCopy class="size-5" />
 				Copiar código
+			</button>
+			<button
+				@click="showModalCode = true"
+				class="bg-custom-red-1 justify-center items-center gap-x-2 flex"
+			>
+				<IconUpload class="size-5" />
+				Cargar
 			</button>
 		</div>
 		<div class="flex flex-row flex-wrap gap-4 items-center">
@@ -41,6 +47,8 @@
 			</button>
 		</div>
 	</div>
+
+	<ModalUploadCode v-if="showModalCode" @close="showModalCode = false" @loadData="onLoadData" />
 </template>
 
 <script setup lang="ts">
@@ -52,15 +60,26 @@ import IconSwitch from "@/components/icons/IconSwitch.vue";
 import IconReload from "@/components/icons/IconReload.vue";
 import IconCopy from "@/components/icons/IconCopy.vue";
 import IconTrash from "@/components/icons/IconTrash.vue";
+import IconUpload from "../icons/IconUpload.vue";
+import { ref } from "vue";
+import ModalUploadCode from "./ModalUploadCode.vue";
 
 
 interface Props {
 	BOARD: IBoardData[][];
-	SELECTED_DATA: IBoardData[];
+	SELECTED_DATA: IBoardData[];	
 	IS_INVERTED: boolean;
 }
 
 const { BOARD, SELECTED_DATA, IS_INVERTED } = defineProps<Props>();
+
+const showModalCode = ref(false);
+
+const $emit = defineEmits(['invert', 'clear', 'reset', 'setSelectedData']);
+
+const onLoadData = (data: IBoardData[]) => {
+	$emit('setSelectedData', data);
+}
 
 const copyToClipboardText = async () => {
 	const text = generateAscii({
