@@ -22,3 +22,7 @@ body {
 button:not(.cell) {
   @apply rounded-md px-4 py-2 hover;
 }
+
+.custom-range {
+  @apply accent-custom-red-1
+}
