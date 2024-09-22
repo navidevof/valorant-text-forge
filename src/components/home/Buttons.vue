@@ -7,7 +7,7 @@
 			>
 				<IconCopy class="size-5" />
 				Copiar
-			</button>			
+			</button>
 			<button
 				@click="copyToClipboardCode"
 				class="bg-custom-red-1 justify-center items-center gap-x-2 flex"
@@ -25,21 +25,21 @@
 		</div>
 		<div class="flex flex-row flex-wrap gap-4 items-center">
 			<button
-				@click="$emit('invert')"
+				@click="toggleInvert"
 				class="bg-custom-red-3 flex justify-center items-center gap-x-2"
 			>
 				<IconSwitch class="size-5" />
 				Invertir
 			</button>
 			<button
-				@click="$emit('clear')"
+				@click="clearBoard"
 				class="bg-custom-red-3 flex justify-center items-center gap-x-2"
 			>
 				<IconTrash class="size-5" />
 				Borrar
 			</button>
 			<button
-				@click="$emit('reset')"
+				@click="resetBoard"
 				class="bg-custom-red-3 flex justify-center items-center gap-x-2"
 			>
 				<IconReload class="size-5" />
@@ -48,12 +48,11 @@
 		</div>
 	</div>
 
-	<ModalUploadCode v-if="showModalCode" @close="showModalCode = false" @loadData="onLoadData" />
+	<ModalUploadCode v-if="showModalCode" @close="showModalCode = false" />
 </template>
 
 <script setup lang="ts">
 import JSConfetti from "js-confetti";
-import { IBoardData } from "@/interfaces/board";
 import { generateAscii } from "@/utils/generateAscii";
 
 import IconSwitch from "@/components/icons/IconSwitch.vue";
@@ -63,29 +62,30 @@ import IconTrash from "@/components/icons/IconTrash.vue";
 import IconUpload from "../icons/IconUpload.vue";
 import { ref } from "vue";
 import ModalUploadCode from "./ModalUploadCode.vue";
+import { useBoardStore } from "@/store/board";
+import { storeToRefs } from "pinia";
 
-
-interface Props {
-	BOARD: IBoardData[][];
-	SELECTED_DATA: IBoardData[];	
-	IS_INVERTED: boolean;
-}
-
-const { BOARD, SELECTED_DATA, IS_INVERTED } = defineProps<Props>();
+const boardStore = useBoardStore();
+const { BOARD, SELECTED_DATA, IS_INVERTED, INITIAL_ROWS, ROWS, RESOLUTION } =
+	storeToRefs(boardStore);
 
 const showModalCode = ref(false);
 
-const $emit = defineEmits(['invert', 'clear', 'reset', 'setSelectedData']);
+const toggleInvert = () => (IS_INVERTED.value = !IS_INVERTED.value);
 
-const onLoadData = (data: IBoardData[]) => {
-	$emit('setSelectedData', data);
-}
+const resetBoard = () => {
+	ROWS.value = INITIAL_ROWS.value;
+	clearBoard();
+	boardStore.updateBoard();
+};
+
+const clearBoard = () => (SELECTED_DATA.value = []);
 
 const copyToClipboardText = async () => {
 	const text = generateAscii({
-		board: BOARD,
-		selectedData: SELECTED_DATA,
-		isInverted: IS_INVERTED,
+		board: BOARD.value,
+		selectedData: SELECTED_DATA.value,
+		isInverted: IS_INVERTED.value,
 	});
 	await navigator.clipboard.writeText(text);
 	const jsConfetti = new JSConfetti();
@@ -93,7 +93,13 @@ const copyToClipboardText = async () => {
 };
 
 const copyToClipboardCode = async () => {
-	await navigator.clipboard.writeText(JSON.stringify(SELECTED_DATA));
+	await navigator.clipboard.writeText(
+		JSON.stringify({
+			resolution: RESOLUTION.value,
+			data: SELECTED_DATA.value,
+			rows: ROWS.value,
+		})
+	);
 	const jsConfetti = new JSConfetti();
 	jsConfetti.addConfetti();
 };

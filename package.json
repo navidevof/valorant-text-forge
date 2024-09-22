@@ -10,7 +10,11 @@
   },
   "dependencies": {
     "js-confetti": "^0.12.0",
-    "vue": "^3.4.37"
+    "pinia": "^2.2.2",
+    "pinia-plugin-persistedstate": "^4.0.2",
+    "vue": "^3.4.37",
+    "vue-router": "^4.4.5",
+    "vue-toastification": "2.0.0-rc.5"
   },
   "devDependencies": {
     "@types/node": "^22.5.5",
