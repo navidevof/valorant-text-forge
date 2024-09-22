@@ -13,15 +13,15 @@
 					<span class="text-custom-red-1">Valorant</span> Text Forge
 					<sub
 						class="text-custom-red-1 inline-block md:inline md:w-auto w-full text-right"
-						>By
+						>
+						By
 						<a
 							href="https://github.com/navidevof"
 							target="_blank"
 							rel="noopener noreferrer"
-							class="underline"
-							>Navidev</a
-						></sub
-					>
+							class="animate-pulse hover:underline transition duration-300"
+						>Navidev✨</a>
+					</sub>
 				</h1>
 			</aside>
 		</nav>

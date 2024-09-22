@@ -1,50 +1,48 @@
 <template>
-	<div class="flex flex-col md:flex-row w-11/12 mx-auto gap-4 justify-between">
-		<div class="flex flex-row gap-4 items-center">
-			<button
-				@click="$emit('copyText')"
-				class="bg-custom-red-1 flex justify-center items-center gap-x-2"
-			>
-				<IconCopy class="size-5" />
-				Copiar
-			</button>
-			<button
-				@click="$emit('copyCode')"
-				class="bg-custom-red-1 flex justify-center items-center gap-x-2"
-			>
-				<IconCopy class="size-5" />
-				Copiar código
-			</button>
-		</div>
-		<div class="flex flex-row gap-4">
-			<button
-				@click="$emit('invert')"
-				class="bg-custom-red-3 flex justify-center items-center gap-x-2"
-			>
-				<IconSwitch class="size-5" />
-				Invertir
-			</button>
-			<button
-				@click="$emit('clear')"
-				class="bg-custom-red-3 flex justify-center items-center gap-x-2"
-			>
-				<IconTrash class="size-5" />
-				Borrar
-			</button>
-			<button
-				@click="$emit('reset')"
-				class="bg-custom-red-3 flex justify-center items-center gap-x-2"
-			>
-				<IconReload class="size-5" />
-				Reiniciar
-			</button>
-		</div>
-	</div>
+  <div class="flex justify-between md:flex-row flex-col gap-4 w-11/12 mx-auto">
+    <label class="flex flex-col gap-2 min-w-56">
+      <span>¿Cual es tu resolución?</span>
+      <select v-model="RESOLUTION" @change="$emit('changeResolution', RESOLUTION)" class="w-full">
+        <option selected value="full">Full HD</option>
+        <option value="stretched">Stretched</option>
+      </select>
+    </label>
+    <label for="rows" class="flex flex-row items-center gap-2">
+      <span class="w-fit font-semibold">Filas:</span>
+      <div class="w-full flex items-center flex-row justify-between gap-2">
+        <span>1</span>
+        <input
+          type="range"
+          class="w-full custom-range"
+          name="rows"
+          min="1"
+          :title="`Fila actual: ${ROWS}`"
+          :max="MAX_ROWS" 
+          :value="ROWS"         
+          @input="onInput"
+        />
+        <span class="">{{ MAX_ROWS }}</span>
+      </div>
+    </label>
+  </div>
 </template>
 
-<script setup lang="ts">
-import IconSwitch from "@/components/icons/IconSwitch.vue";
-import IconReload from "@/components/icons/IconReload.vue";
-import IconCopy from "@/components/icons/IconCopy.vue";
-import IconTrash from "@/components/icons/IconTrash.vue";
+<script lang="ts" setup>
+import { ref } from 'vue';
+
+
+interface Props {
+  ROWS: number;
+  MAX_ROWS: number;
+  updateBoard: (value: number) => void;
+}
+
+const { updateBoard } = defineProps<Props>();
+
+const RESOLUTION = ref<'stretched' | 'full'>('full');
+
+const onInput = (e: Event) => {
+  if (!(e.target instanceof HTMLInputElement)) return;
+  updateBoard(Number(e.target.value));
+}
 </script>
