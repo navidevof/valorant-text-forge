@@ -5,4 +5,7 @@
 
 <script setup lang="ts">
 import Header from "@/components/common/Header.vue";
+import { inject } from "@vercel/analytics";
+
+inject();
 </script>
