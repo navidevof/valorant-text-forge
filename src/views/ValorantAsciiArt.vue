@@ -1,5 +1,7 @@
 <template>
-	<div class="flex flex-col gap-4 w-11/12 md:w-10/12 max-w-screen-lg mx-auto">
+	<div
+		class="flex flex-col gap-4 w-11/12 md:w-10/12 max-w-screen-lg mx-auto pb-10"
+	>
 		<Controls />
 		<Board />
 		<Buttons />

@@ -4,7 +4,7 @@
 			<span>¿Cual es tu resolución?</span>
 			<select
 				v-model="RESOLUTION"
-				@change="() => boardStore.updateBoard()"
+				@change="() => boardStore.updateBoard(ROWS)"
 				class="w-full"
 			>
 				<option selected value="full">Full HD</option>

@@ -1,5 +1,5 @@
 <template>
-	<div class="flex flex-col md:flex-row w-11/12 mx-auto gap-4 justify-between">
+	<div class="flex flex-row flex-wrap w-11/12 mx-auto gap-y-4 justify-between">
 		<div class="flex flex-row flex-wrap gap-4 items-center">
 			<button
 				@click="copyToClipboardText"
@@ -118,7 +118,7 @@ const copyToClipboardText = async () => {
 const copyToClipboardCode = async () => {
 	await navigator.clipboard.writeText(
 		JSON.stringify({
-			resolution: RESOLUTION.value,
+			resolution: RESOLUTION.value ?? "full",
 			data: SELECTED_DATA.value,
 			rows: ROWS.value,
 		})
@@ -131,11 +131,14 @@ const saveArt = () => {
 	if (SELECTED_DATA.value.length === 0) return;
 
 	const jsConfetti = new JSConfetti();
+
 	const newArt = {
+		id: Date.now().toString(),
 		data: [...SELECTED_DATA.value],
 		board: {
 			width: COLS.value,
 			height: ROWS.value,
+			resolution: RESOLUTION.value ?? "full",
 		},
 		textPlain: generateAscii({
 			board: BOARD.value,

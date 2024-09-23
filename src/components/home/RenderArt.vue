@@ -3,13 +3,6 @@
 		<pre class="text-white text-sm">{{ renderArt }}</pre>
 		<div class="flex flex-row gap-4">
 			<button
-				@click="localArtsStore.removeArt(art)"
-				class="bg-custom-red-3 justify-center items-center gap-x-2 flex group relative z-10"
-			>
-				<IconTrash class="size-5" />
-				<Tooltip position="top" text="Borrar" />
-			</button>
-			<button
 				@click="copyToClipboardText"
 				class="bg-custom-red-3 justify-center items-center gap-x-2 flex group relative z-10"
 				:class="{ 'opacity-50': IS_COPY, 'cursor-not-allowed': IS_COPY }"
@@ -25,6 +18,13 @@
 			>
 				<IconEye class="size-5" />
 				<Tooltip position="top" text="Ver en el editor" />
+			</button>
+			<button
+				@click="localArtsStore.removeArt(art)"
+				class="bg-custom-red-3 justify-center items-center gap-x-2 flex group relative z-10"
+			>
+				<IconTrash class="size-5" />
+				<Tooltip position="top" text="Borrar" />
 			</button>
 		</div>
 	</div>
@@ -57,6 +57,7 @@ const localArtsStore = useLocalArtsStore();
 const boardStore = useBoardStore();
 
 const { SELECTED_DATA } = storeToRefs(boardStore);
+const { RESOLUTION } = storeToRefs(boardStore);
 
 const renderArt = computed(() => addLineBreaks(art.textPlain, art.board.width));
 
@@ -73,5 +74,8 @@ const copyToClipboardText = async () => {
 
 const showInEditor = () => {
 	SELECTED_DATA.value = art.data;
+	RESOLUTION.value = art.board.resolution;
+
+	boardStore.updateBoard(art.board.height);
 };
 </script>
