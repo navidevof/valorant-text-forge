@@ -12,6 +12,7 @@
 		>
 			<button
 				v-for="(col, colIdx) in row"
+				:name="`Fila: ${rowIdx + 1}, Columna: ${colIdx + 1}`"
 				:key="colIdx"
 				class="size-full aspect-square cell transition duration-200 ease-out"
 				:class="[
