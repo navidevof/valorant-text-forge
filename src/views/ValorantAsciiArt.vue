@@ -3,6 +3,7 @@
 		<Controls />
 		<Board />
 		<Buttons />
+		<MyArts />
 	</div>
 </template>
 
@@ -12,6 +13,7 @@ import Board from "@/components/home/Board.vue";
 import Buttons from "@/components/home/Buttons.vue";
 import Controls from "@/components/home/Controls.vue";
 import { useBoardStore } from "../store/board";
+import MyArts from "@/components/home/MyArts.vue";
 
 const boardStore = useBoardStore();
 

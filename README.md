@@ -1,5 +1,15 @@
-# Vue 3 + TypeScript + Vite
+# ValorantTextForge
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+### Descripción
 
-Learn more about the recommended Project Setup and IDE Support in the [Vue Docs TypeScript Guide](https://vuejs.org/guide/typescript/overview.html#project-setup).
+**ValorantTextForge** es una plataforma web que permite a los usuarios buscar, crear y personalizar mensajes con formato ASCII en el chats del juego *Valorant*. Está diseñada para usarse idealmente en PC y permite a los usuarios crear mensajes divertidos y creativos en medio de la batalla.
+
+### Características
+
+- 🎮 Generador ASCII ART para Valorant.
+- 🔧 Estado global persistente usando Pinia con estado persistido.
+- 🚀 Renderizado rápido con Vite y Vue 3.
+
+### Próximas funcionalidades
+
+- 📝 Modulo de comunidad.

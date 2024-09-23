@@ -15,16 +15,18 @@
 			<span class="w-fit font-semibold">Filas:</span>
 			<div class="w-full flex items-center flex-row justify-between gap-2">
 				<span>1</span>
-				<input
-					type="range"
-					class="w-full custom-range"
-					name="rows"
-					min="1"
-					:title="`Fila actual: ${ROWS}`"
-					:max="MAX_ROWS"
-					:value="ROWS"
-					@input="onInput"
-				/>
+				<div class="relative group flex items-center">
+					<input
+						type="range"
+						class="w-full custom-range"
+						name="rows"
+						min="1"
+						:max="MAX_ROWS"
+						:value="ROWS"
+						@input="onInput"
+					/>
+					<Tooltip position="top" :text="`Fila actual: ${ROWS}`" />
+				</div>
 				<span>{{ MAX_ROWS }}</span>
 			</div>
 		</label>
@@ -34,6 +36,7 @@
 <script lang="ts" setup>
 import { useBoardStore } from "@/store/board";
 import { storeToRefs } from "pinia";
+import Tooltip from "../common/Tooltip.vue";
 
 const boardStore = useBoardStore();
 const { ROWS, MAX_ROWS, RESOLUTION } = storeToRefs(boardStore);

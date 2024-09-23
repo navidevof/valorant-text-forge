@@ -3,47 +3,56 @@
 		<div class="flex flex-row flex-wrap gap-4 items-center">
 			<button
 				@click="copyToClipboardText"
-				class="bg-custom-red-1 flex justify-center items-center gap-x-2"
+				class="bg-custom-red-1 justify-center items-center gap-x-2 flex group relative z-10"
 			>
 				<IconCopy class="size-5" />
-				Copiar
+				<Tooltip position="top" text="Copiar" />
 			</button>
 			<button
 				@click="copyToClipboardCode"
-				class="bg-custom-red-1 justify-center items-center gap-x-2 flex"
+				class="bg-custom-red-1 justify-center items-center gap-x-2 flex group relative z-10"
 			>
-				<IconCopy class="size-5" />
-				Copiar código
+				<IconDownload class="size-5" />
+				<Tooltip position="top" text="Exportar código" />
 			</button>
 			<button
 				@click="showModalCode = true"
-				class="bg-custom-red-1 justify-center items-center gap-x-2 flex"
+				class="bg-custom-red-1 justify-center items-center gap-x-2 flex group relative z-10"
 			>
 				<IconUpload class="size-5" />
-				Cargar
+				<Tooltip position="top" text="Importar código" />
+			</button>
+		</div>
+		<div class="flex flex-row flex-wrap gap-4 items-center">
+			<button
+				@click="saveArt"
+				class="bg-custom-red-1 justify-center items-center gap-x-2 flex group relative z-10"
+			>
+				<IconSave class="size-5" />
+				<Tooltip position="top" text="Guardar" />
 			</button>
 		</div>
 		<div class="flex flex-row flex-wrap gap-4 items-center">
 			<button
 				@click="toggleInvert"
-				class="bg-custom-red-3 flex justify-center items-center gap-x-2"
+				class="bg-custom-red-3 flex justify-center items-center gap-x-2 group relative z-10"
 			>
 				<IconSwitch class="size-5" />
-				Invertir
+				<Tooltip position="top" text="Invertir" />
 			</button>
 			<button
 				@click="clearBoard"
-				class="bg-custom-red-3 flex justify-center items-center gap-x-2"
+				class="bg-custom-red-3 flex justify-center items-center gap-x-2 group relative z-10"
 			>
 				<IconTrash class="size-5" />
-				Borrar
+				<Tooltip position="top" text="Borrar" />
 			</button>
 			<button
 				@click="resetBoard"
-				class="bg-custom-red-3 flex justify-center items-center gap-x-2"
+				class="bg-custom-red-3 flex justify-center items-center gap-x-2 group relative z-10"
 			>
 				<IconReload class="size-5" />
-				Reiniciar
+				<Tooltip position="top" text="Reiniciar" />
 			</button>
 		</div>
 	</div>
@@ -52,22 +61,36 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from "vue";
+import { storeToRefs } from "pinia";
 import JSConfetti from "js-confetti";
-import { generateAscii } from "@/utils/generateAscii";
 
+import { useBoardStore } from "@/store/board";
+import { useLocalArtsStore } from "@/store/localArts";
+import { generateAscii } from "@/utils/generateAscii";
 import IconSwitch from "@/components/icons/IconSwitch.vue";
 import IconReload from "@/components/icons/IconReload.vue";
 import IconCopy from "@/components/icons/IconCopy.vue";
 import IconTrash from "@/components/icons/IconTrash.vue";
 import IconUpload from "../icons/IconUpload.vue";
-import { ref } from "vue";
+import IconDownload from "../icons/IconDownload.vue";
+import IconSave from "../icons/IconSave.vue";
 import ModalUploadCode from "./ModalUploadCode.vue";
-import { useBoardStore } from "@/store/board";
-import { storeToRefs } from "pinia";
+import Tooltip from "../common/Tooltip.vue";
 
 const boardStore = useBoardStore();
-const { BOARD, SELECTED_DATA, IS_INVERTED, INITIAL_ROWS, ROWS, RESOLUTION } =
-	storeToRefs(boardStore);
+const localArtsStore = useLocalArtsStore();
+
+const {
+	BOARD,
+	SELECTED_DATA,
+	IS_INVERTED,
+	INITIAL_ROWS,
+	ROWS,
+	RESOLUTION,
+	COLS,
+} = storeToRefs(boardStore);
+const { MY_ARTS } = storeToRefs(localArtsStore);
 
 const showModalCode = ref(false);
 
@@ -101,6 +124,44 @@ const copyToClipboardCode = async () => {
 		})
 	);
 	const jsConfetti = new JSConfetti();
+	jsConfetti.addConfetti();
+};
+
+const saveArt = () => {
+	if (SELECTED_DATA.value.length === 0) return;
+
+	const jsConfetti = new JSConfetti();
+	const newArt = {
+		data: [...SELECTED_DATA.value],
+		board: {
+			width: COLS.value,
+			height: ROWS.value,
+		},
+		textPlain: generateAscii({
+			board: BOARD.value,
+			selectedData: SELECTED_DATA.value,
+			isInverted: IS_INVERTED.value,
+		}),
+	};
+
+	if (MY_ARTS.value.length === 0) {
+		localArtsStore.addArt(newArt);
+		jsConfetti.addConfetti();
+		return;
+	}
+
+	const existArt = MY_ARTS.value.findIndex((art) =>
+		localArtsStore.isEqual(art.data, newArt.data)
+	);
+
+	if (existArt >= 0) {
+		localArtsStore.updateArt(newArt);
+		jsConfetti.addConfetti();
+
+		return;
+	}
+
+	localArtsStore.addArt(newArt);
 	jsConfetti.addConfetti();
 };
 </script>
