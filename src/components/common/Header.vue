@@ -1,3 +1,7 @@
+<script setup lang="ts">
+import ButtonBuyMeCoffee from "./ButtonBuyMeCoffee.vue";
+</script>
+
 <template>
 	<header class="w-full mb-10 mx-auto border-b border-custom-white/50">
 		<nav
@@ -19,12 +23,13 @@
 							href="https://github.com/navidevof"
 							target="_blank"
 							rel="noopener noreferrer"
-							class="animate-pulse hover:underline transition duration-300"
+							class="hover:underline transition duration-300"
 							>Navidev✨</a
 						>
 					</sub>
 				</h1>
 			</aside>
+			<ButtonBuyMeCoffee />
 		</nav>
 	</header>
 </template>

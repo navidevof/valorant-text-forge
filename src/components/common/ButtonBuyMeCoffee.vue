@@ -7,7 +7,7 @@ import IconCoffee from "../icons/IconCoffee.vue";
 		href="https://buymeacoffee.com/navidev"
 		target="_blank"
 		rel="noopener noreferrer"
-		class="fixed bottom-3 flex z-50 hover:gap-x-1 items-center right-3 button-buy rounded-md px-4 py-2 animate-pulse hover:animate-none transition-all duration-300 outline-none bg-custom-red-1"
+		class="fixed md:relative bottom-3 md:bottom-0 md:right-0 flex z-50 hover:gap-x-1 items-center right-3 button-buy rounded-md px-4 py-2 animate-pulse hover:animate-none transition-all duration-300 outline-none bg-custom-red-1"
 	>
 		<IconCoffee class="size-6" />
 		<span class="font-bold">Donar un cafe</span>
