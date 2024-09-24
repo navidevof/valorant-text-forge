@@ -111,7 +111,7 @@ const copyToClipboardText = async () => {
 		selectedData: SELECTED_DATA.value,
 		isInverted: IS_INVERTED.value,
 	});
-	await navigator.clipboard.writeText(text);
+	await navigator.clipboard.writeText(text + MESSAGES.waterMark);
 	const jsConfetti = new JSConfetti();
 	jsConfetti.addConfetti();
 };
@@ -122,7 +122,7 @@ const copyToClipboardCode = async () => {
 			resolution: RESOLUTION.value ?? "full",
 			data: SELECTED_DATA.value,
 			rows: ROWS.value,
-		}) + MESSAGES.waterMark
+		})
 	);
 	const jsConfetti = new JSConfetti();
 	jsConfetti.addConfetti();

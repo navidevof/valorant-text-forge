@@ -1,7 +1,7 @@
 <template>
-	<div class="flex flex-col gap-4 aspect-square">
+	<div class="flex flex-col gap-4">
 		<pre class="text-white text-lg">{{ renderArt }}</pre>
-		<div class="flex flex-row justify-center gap-4">
+		<div class="flex flex-row justify-center gap-4 h-auto">
 			<button
 				@click="copyToClipboardText"
 				class="bg-custom-red-3 justify-center items-center gap-x-2 flex group relative z-10"

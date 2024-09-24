@@ -1,7 +1,7 @@
 <template>
 	<div class="flex flex-col gap-6 w-full mx-auto">
 		<h1 class="text-white text-2xl">Mis Artes</h1>
-		<div v-if="MY_ARTS.length > 0" class="flex flex-wrap gap-4">
+		<div v-if="MY_ARTS.length > 0" class="flex flex-wrap gap-4 items-end">
 			<RenderArt v-for="art in MY_ARTS" :key="art.id" :art="art" />
 		</div>
 		<span v-else class="text-white text-sm -mt-3">
