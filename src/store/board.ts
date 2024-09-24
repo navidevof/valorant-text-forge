@@ -7,7 +7,7 @@ import { TResolution } from "@/interfaces/resolution";
 export const useBoardStore = defineStore("board", () => {
 	const RESOLUTION = ref<TResolution>("full");
 	const COLS = computed(() => (RESOLUTION.value === "full" ? 26 : 27));
-	const MAX_ROWS = ref(13);
+	const MAX_ROWS = ref(14);
 	const INITIAL_ROWS = ref(7);
 	const ROWS = ref(INITIAL_ROWS.value);
 	const BOARD = ref<IBoardData[][]>([]);

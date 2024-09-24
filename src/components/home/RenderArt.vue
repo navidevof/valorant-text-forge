@@ -44,6 +44,7 @@ import IconCopyOf from "../icons/IconCopyOf.vue";
 import IconEye from "../icons/IconEye.vue";
 import { useBoardStore } from "../../store/board";
 import { storeToRefs } from "pinia";
+import { MESSAGES } from "@/constants/messages";
 
 interface Props {
 	art: ILcalArt;
@@ -61,7 +62,7 @@ const { RESOLUTION } = storeToRefs(boardStore);
 const renderArt = computed(() => addLineBreaks(art.textPlain, art.board.width));
 
 const copyToClipboardText = async () => {
-	await navigator.clipboard.writeText(art.textPlain);
+	await navigator.clipboard.writeText(art.textPlain + MESSAGES.waterMark);
 	IS_COPY.value = true;
 
 	const jsConfetti = new JSConfetti();

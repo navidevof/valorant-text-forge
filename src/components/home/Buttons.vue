@@ -77,6 +77,7 @@ import IconDownload from "../icons/IconDownload.vue";
 import IconSave from "../icons/IconSave.vue";
 import ModalUploadCode from "./ModalUploadCode.vue";
 import Tooltip from "../common/Tooltip.vue";
+import { MESSAGES } from "@/constants/messages";
 
 const boardStore = useBoardStore();
 const localArtsStore = useLocalArtsStore();
@@ -121,7 +122,7 @@ const copyToClipboardCode = async () => {
 			resolution: RESOLUTION.value ?? "full",
 			data: SELECTED_DATA.value,
 			rows: ROWS.value,
-		})
+		}) + MESSAGES.waterMark
 	);
 	const jsConfetti = new JSConfetti();
 	jsConfetti.addConfetti();
