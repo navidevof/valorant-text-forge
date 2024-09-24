@@ -1,3 +1,4 @@
+import { LOCAL_ARTS_INITIAL_DATA } from "@/constants/initialData";
 import { ILcalArt } from "@/interfaces/art";
 import { IBoardData } from "@/interfaces/board";
 import { defineStore } from "pinia";
@@ -6,7 +7,7 @@ import { ref } from "vue";
 export const useLocalArtsStore = defineStore(
 	"local-arts",
 	() => {
-		const MY_ARTS = ref<ILcalArt[]>([]);
+		const MY_ARTS = ref<ILcalArt[]>([...LOCAL_ARTS_INITIAL_DATA]);
 
 		const isEqual = (artA: IBoardData[], artB: IBoardData[]) => {
 			if (artA.length !== artB.length) return false;
