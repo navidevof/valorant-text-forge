@@ -5,7 +5,7 @@
 		<Controls />
 		<Board />
 		<Buttons />
-		<MyArts />
+		<Tabs />
 	</div>
 </template>
 
@@ -15,7 +15,7 @@ import Board from "@/components/home/Board.vue";
 import Buttons from "@/components/home/Buttons.vue";
 import Controls from "@/components/home/Controls.vue";
 import { useBoardStore } from "../store/board";
-import MyArts from "@/components/home/MyArts.vue";
+import Tabs from "@/components/home/tabs/Tabs.vue";
 
 const boardStore = useBoardStore();
 

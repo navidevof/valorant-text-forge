@@ -25,7 +25,7 @@ textarea {
 	@apply bg-gray-900 text-custom-white border-custom-white border rounded-md px-2 py-1 outline-none;
 }
 
-button:not(.cell):not(.drag) {
+button:not(.cell):not(.drag):not(.Vue-Toastification__close-button) {
 	@apply rounded-md px-4 py-2 hover outline-none;
 }
 

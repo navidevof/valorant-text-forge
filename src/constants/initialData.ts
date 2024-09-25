@@ -1,3 +1,3 @@
-import { ILcalArt } from "@/interfaces/art";
+import { ILocalArt } from "@/interfaces/art";
 
-export const LOCAL_ARTS_INITIAL_DATA: ILcalArt[] = [];
+export const LOCAL_ARTS_INITIAL_DATA: ILocalArt[] = [];

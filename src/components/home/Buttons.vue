@@ -66,7 +66,7 @@ import { storeToRefs } from "pinia";
 import JSConfetti from "js-confetti";
 
 import { useBoardStore } from "@/store/board";
-import { useLocalArtsStore } from "@/store/localArts";
+import { useArtsStore } from "@/store/arts";
 import { generateAscii } from "@/utils/generateAscii";
 import IconSwitch from "@/components/icons/IconSwitch.vue";
 import IconReload from "@/components/icons/IconReload.vue";
@@ -78,9 +78,10 @@ import IconSave from "../icons/IconSave.vue";
 import ModalUploadCode from "./ModalUploadCode.vue";
 import Tooltip from "../common/Tooltip.vue";
 import { MESSAGES } from "@/constants/messages";
+import { ILocalArt } from "@/interfaces/art";
 
 const boardStore = useBoardStore();
-const localArtsStore = useLocalArtsStore();
+const artsStore = useArtsStore();
 
 const {
 	BOARD,
@@ -91,7 +92,7 @@ const {
 	RESOLUTION,
 	COLS,
 } = storeToRefs(boardStore);
-const { MY_ARTS } = storeToRefs(localArtsStore);
+const { MY_ARTS } = storeToRefs(artsStore);
 
 const showModalCode = ref(false);
 
@@ -133,8 +134,8 @@ const saveArt = () => {
 
 	const jsConfetti = new JSConfetti();
 
-	const newArt = {
-		id: Date.now().toString(),
+	const newArt: ILocalArt = {
+		localArtId: self.crypto.randomUUID(),
 		data: [...SELECTED_DATA.value],
 		board: {
 			width: COLS.value,
@@ -149,23 +150,20 @@ const saveArt = () => {
 	};
 
 	if (MY_ARTS.value.length === 0) {
-		localArtsStore.addArt(newArt);
+		artsStore.addArt(newArt);
 		jsConfetti.addConfetti();
 		return;
 	}
 
 	const existArt = MY_ARTS.value.findIndex((art) =>
-		localArtsStore.isEqual(art.data, newArt.data)
+		artsStore.isEqual(art.data, newArt.data)
 	);
 
-	if (existArt >= 0) {
-		localArtsStore.updateArt(newArt);
-		jsConfetti.addConfetti();
+	if (existArt >= 0) return;
 
-		return;
-	}
-
-	localArtsStore.addArt(newArt);
+	artsStore.addArt(newArt);
 	jsConfetti.addConfetti();
+
+	clearBoard();
 };
 </script>
