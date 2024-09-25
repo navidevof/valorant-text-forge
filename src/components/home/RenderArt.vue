@@ -1,6 +1,14 @@
 <template>
-	<div class="flex flex-col gap-4">
-		<pre class="text-white text-lg">{{ renderArt }}</pre>
+	<div class="flex flex-col gap-4 h-full">
+		<div class="border bg-gray-900 rounded-md px-1 pt-1 relative">
+			<button
+				v-if="showDarg"
+				class="absolute top-1 right-2 shadow-md drag p-1 bg-custom-red-2/90 rounded cursor-grab active:cursor-grabbing"
+			>
+				<IconDrag class="size-5" />
+			</button>
+			<pre class="text-white text-lg">{{ renderArt }}</pre>
+		</div>
 		<div class="flex flex-row justify-center gap-4 h-auto">
 			<button
 				@click="copyToClipboardText"
@@ -45,9 +53,11 @@ import IconEye from "../icons/IconEye.vue";
 import { useBoardStore } from "../../store/board";
 import { storeToRefs } from "pinia";
 import { MESSAGES } from "@/constants/messages";
+import IconDrag from "../icons/IconDrag.vue";
 
 interface Props {
 	art: ILcalArt;
+	showDarg?: boolean;
 }
 
 const { art } = defineProps<Props>();
