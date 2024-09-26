@@ -7,9 +7,11 @@
 		>
 			<RenderLocalArt v-for="art in MY_ARTS" :key="art.localArtId" :art="art" />
 		</div>
-		<span v-else class="text-white text-sm -mt-3">
-			Aún no has creado ningún arte :c
-		</span>
+		<pre
+			v-else
+			class="text-white text-[11.5px] sm:text-sm text-center mt-3 md:text-lg"
+			>{{ emptyArt }}</pre
+		>
 	</div>
 </template>
 
@@ -19,11 +21,12 @@ import Sortable from "sortablejs";
 import { storeToRefs } from "pinia";
 
 import { useArtsStore } from "@/store/arts";
-import RenderLocalArt from "@/components/home/tabs/RenderLocalArt.vue";
+import RenderLocalArt from "@/components/common/RenderLocalArt.vue";
 import { getMyArts } from "@/services/community";
 import { useUIStore } from "@/store/ui.store";
 import { MESSAGES } from "@/constants/messages";
 import { auth } from "@/firebase";
+import { addLineBreaks } from "@/utils/addLineBreaks";
 
 const uiStore = useUIStore();
 const artsStore = useArtsStore();
@@ -32,6 +35,11 @@ const { isLoading } = storeToRefs(uiStore);
 const { MY_ARTS, PUBLISH_ARTS } = storeToRefs(artsStore);
 
 const $myArts = ref<HTMLDivElement | null>(null);
+
+const emptyArt = addLineBreaks(
+	"░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░████░█░█░░░█░░░██░░████░█████░████░████░░░█░█░░░░░█░░░░░░██░░█░░█░░█░█░░█░░░█░░░█░░░░█░░░░░░█░█░░░░░████░█░█░█░█░░████░████░░░█░░░███░░████░░░░░░░░░░░░░░█░█░█░░██░░█░░█░█░█░░░░█░░░█░░░░░░░█░░░███░░░░░████░█░█░░░█░░█░░█░█░░█░░░█░░░████░████░░█░░░█░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░",
+	50
+);
 
 onMounted(async () => {
 	if (!$myArts.value) return;

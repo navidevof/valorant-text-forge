@@ -1,12 +1,12 @@
 <template>
-	<div
+	<main
 		class="flex flex-col gap-4 w-11/12 md:w-10/12 max-w-screen-lg mx-auto pb-16"
 	>
 		<Controls />
 		<Board />
 		<Buttons />
 		<Tabs />
-	</div>
+	</main>
 </template>
 
 <script setup lang="ts">

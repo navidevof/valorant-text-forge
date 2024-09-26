@@ -5,12 +5,14 @@ import {
 	collection,
 	deleteDoc,
 	doc,
+	getDoc,
 	getDocs,
 	increment,
 	limit,
 	orderBy,
 	query,
 	setDoc,
+	startAfter,
 	updateDoc,
 	where,
 } from "firebase/firestore";
@@ -21,7 +23,7 @@ const getRecommendationsCommunityArts = async () => {
 			query(
 				collection(db, communityArtsCollection),
 				orderBy("likes", "desc"),
-				limit(10)
+				limit(6)
 			)
 		);
 
@@ -38,6 +40,58 @@ const getRecommendationsCommunityArts = async () => {
 			error: true,
 			data: [],
 			message: "Error al obtener las recomendaciones de la comunidad.",
+		};
+	}
+};
+
+const getCommunityArts = async (lasDoc: string) => {
+	try {
+		let snap;
+
+		if (lasDoc && lasDoc != "") {
+			const lasDocRef = await getDoc(doc(db, communityArtsCollection, lasDoc));
+
+			if (!lasDocRef.exists())
+				return {
+					error: true,
+					data: [],
+					lasDoc: "",
+					message: "Error al realizar la paginación.",
+				};
+
+			snap = await getDocs(
+				query(
+					collection(db, communityArtsCollection),
+					orderBy("likes", "desc"),
+					limit(6),
+					startAfter(lasDocRef)
+				)
+			);
+		} else {
+			snap = await getDocs(
+				query(
+					collection(db, communityArtsCollection),
+					orderBy("likes", "desc"),
+					limit(6)
+				)
+			);
+		}
+
+		const data = snap.docs.map((doc) => doc.data() as ICommunityArt);
+
+		return {
+			data,
+			lasDoc: snap.docs[snap.docs.length - 1]?.id ?? "",
+			message: "Artes de la comunidad obtenidas.",
+			error: false,
+		};
+	} catch (error) {
+		console.log({ error });
+		return {
+			error: true,
+			data: [],
+			lasDoc: "",
+			message: "Error al obtener las artes de la comunidad.",
 		};
 	}
 };
@@ -141,4 +195,5 @@ export {
 	getMyArts,
 	unpublishArt,
 	updateLikeArt,
+	getCommunityArts,
 };

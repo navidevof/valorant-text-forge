@@ -9,7 +9,4 @@
 - 🎮 Generador ASCII ART para Valorant.
 - 🔧 Estado global persistente usando Pinia con estado persistido.
 - 🚀 Renderizado rápido con Vite y Vue 3.
-
-### Próximas funcionalidades
-
-- 📝 Modulo de comunidad.
+- 🎨 Modulo de comunidad.

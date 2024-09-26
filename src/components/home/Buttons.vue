@@ -1,5 +1,5 @@
 <template>
-	<div class="flex flex-row flex-wrap w-11/12 mx-auto gap-y-4 justify-between">
+	<div class="flex flex-row flex-wrap w-11/12 mx-auto gap-4 justify-between">
 		<div class="flex flex-row flex-wrap gap-4 items-center">
 			<button
 				@click="copyToClipboardText"

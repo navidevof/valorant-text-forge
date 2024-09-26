@@ -5,7 +5,7 @@
 		class="border border-custom-red-1 text-custom-red-1 flex items-center gap-x-2"
 	>
 		<IconLogout class="size-5" />
-		<span class="text-white">Salir</span>
+		<span class="text-white md:block hidden">Salir</span>
 	</button>
 </template>
 

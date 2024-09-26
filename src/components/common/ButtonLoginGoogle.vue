@@ -5,7 +5,7 @@
 		v-if="!auth.currentUser"
 	>
 		<IconGoogle class="size-5" />
-		Ingresar
+		<span class="md:block hidden">Ingresar</span>
 	</button>
 </template>
 

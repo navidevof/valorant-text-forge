@@ -12,8 +12,15 @@
 			/>
 		</div>
 		<span v-else class="text-white text-sm -mt-3">
-			Aún no has creado ningún arte :c
+			Vaya... Parece que no hay artes recomendadas 😢
 		</span>
+		<router-link
+			to="/comunidad"
+			class="hover bg-custom-red-1 px-4 py-2 flex items-center gap-x-2 rounded-md w-fit mx-auto mt-4 text-white text-sm text-center"
+		>
+			<IconPalette class="size-5" />
+			Ver artes de la comunidad
+		</router-link>
 	</div>
 </template>
 
@@ -26,7 +33,8 @@ import { ICommunityArt } from "@/interfaces/art";
 import { getRecommendationsCommunityArts } from "@/services/community";
 import { MESSAGES } from "@/constants/messages";
 
-import RenderCommunityArt from "./RenderCommunityArt.vue";
+import RenderCommunityArt from "@/components/common/RenderCommunityArt.vue";
+import IconPalette from "@/components/icons/IconPalette.vue";
 
 const uiStore = useUIStore();
 const { isLoading } = storeToRefs(uiStore);

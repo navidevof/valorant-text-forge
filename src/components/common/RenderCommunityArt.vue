@@ -60,12 +60,16 @@ import IconEye from "@/components/icons/IconEye.vue";
 import IconHeartEmpty from "@/components/icons/IconHeartEmpty.vue";
 import IconHeartFilled from "@/components/icons/IconHeartFilled.vue";
 import { useArtsStore } from "@/store/arts";
+import { useRouter } from "vue-router";
 
 interface Props {
 	art: ICommunityArt;
+	goToBoard?: boolean;
 }
 
-const { art } = defineProps<Props>();
+const { art, goToBoard } = defineProps<Props>();
+const router = useRouter();
+
 const IS_COPY = ref(false);
 
 const uiStore = useUIStore();
@@ -95,6 +99,8 @@ const showInEditor = () => {
 	RESOLUTION.value = art.board.resolution;
 
 	boardStore.updateBoard(art.board.height);
+
+	if (goToBoard) router.push("/");
 };
 
 const toggleLike = async () => {
