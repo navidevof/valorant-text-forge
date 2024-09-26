@@ -9,7 +9,7 @@
 		</div>
 		<pre
 			v-else
-			class="text-white text-[11.5px] sm:text-sm text-center mt-3 md:text-lg"
+			class="text-white text-[10px] sm:text-sm text-center mt-3 md:text-lg"
 			>{{ emptyArt }}</pre
 		>
 	</div>
