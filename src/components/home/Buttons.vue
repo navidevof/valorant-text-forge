@@ -152,6 +152,7 @@ const saveArt = () => {
 	if (MY_ARTS.value.length === 0) {
 		artsStore.addArt(newArt);
 		jsConfetti.addConfetti();
+		clearBoard();
 		return;
 	}
 
